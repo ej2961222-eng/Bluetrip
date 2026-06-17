@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roteiros - BlueTrip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Lato:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">📍</div>
+          <span class="logo-text">BlueTrip</span>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Início</a>
+          <a href="explorar.html" class="nav-link">Explorar</a>
+          <a href="roteiro.html" class="nav-link active">Roteiros</a>
+        </nav>
+
+        <a href="explorar.html" class="btn btn-primary">Começar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1>Monte seu Roteiro</h1>
+        <p>Crie um itinerário personalizado com inteligência artificial</p>
+      </div>
+    </section>
+
+    <!-- Roteiro Section -->
+    <section class="roteiro-section">
+      <div class="container">
+        <div class="roteiro-layout">
+          <!-- Form -->
+          <aside class="roteiro-form">
+            <div class="form-box">
+              <h2>Personalize seu Roteiro</h2>
+
+              <!-- Destination -->
+              <div class="form-group">
+                <label for="destination">Destino</label>
+                <input type="text" id="destination" placeholder="Ex: Paris, Bali, Nova York" class="form-input">
+              </div>
+
+              <!-- Days -->
+              <div class="form-group">
+                <label for="days">Quantidade de Dias: <span id="daysValue">3</span></label>
+                <input type="range" id="days" min="1" max="14" value="3" class="form-range">
+              </div>
+
+              <!-- Budget -->
+              <div class="form-group">
+                <label for="budget">Orçamento</label>
+                <select id="budget" class="form-select">
+                  <option value="economico">Econômico</option>
+                  <option value="moderado" selected>Moderado</option>
+                  <option value="luxo">Luxo</option>
+                </select>
+              </div>
+
+              <!-- Preferences -->
+              <div class="form-group">
+                <label>Preferências</label>
+                <div class="preferences-grid">
+                  <button class="preference-btn" data-preference="praia">🏖️ Praia</button>
+                  <button class="preference-btn" data-preference="cultura">🏛️ Cultura</button>
+                  <button class="preference-btn" data-preference="natureza">🌲 Natureza</button>
+                  <button class="preference-btn" data-preference="gastronomia">🍽️ Gastronomia</button>
+                  <button class="preference-btn" data-preference="aventura">🧗 Aventura</button>
+                  <button class="preference-btn" data-preference="relaxamento">🧘 Relaxamento</button>
+                </div>
+              </div>
+
+              <!-- Generate Button -->
+              <button class="btn btn-primary btn-generate" id="generateBtn">✨ Gerar Roteiro</button>
+            </div>
+          </aside>
+
+          <!-- Results -->
+          <div class="roteiro-results" id="roteiro-results">
+            <div class="empty-state">
+              <div class="empty-icon">✨</div>
+              <h3>Nenhum roteiro gerado ainda</h3>
+              <p>Preencha o formulário e clique em "Gerar Roteiro" para criar seu itinerário personalizado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>BlueTrip</h3>
+          <p>Planeje sua viagem perfeita com inteligência e elegância. Descubra destinos incríveis ao redor do mundo.</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="explorar.html">Explorar</a></li>
+            <li><a href="roteiro.html">Roteiros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#">Sobre Nós</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contato</h4>
+          <ul>
+            <li>📧 contato@bluetrip.com</li>
+            <li>📱 +55 (11) 9999-9999</li>
+            <li>📍 São Paulo, Brasil</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 BlueTrip. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/roteiro.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorar - BlueTrip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Lato:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">📍</div>
+          <span class="logo-text">BlueTrip</span>
+        </a>
+        
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Início</a>
+          <a href="explorar.html" class="nav-link active">Explorar</a>
+          <a href="roteiro.html" class="nav-link">Roteiros</a>
+        </nav>
+
+        <a href="explorar.html" class="btn btn-primary">Começar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1>Explore Destinos</h1>
+        <p>Descubra os melhores hotéis, restaurantes e pontos turísticos ao redor do mundo</p>
+      </div>
+    </section>
+
+    <!-- Explore Section -->
+    <section class="explore-section">
+      <div class="container">
+        <div class="explore-layout">
+          <!-- Filters Sidebar -->
+          <aside class="filters-sidebar" id="filtersSidebar">
+            <div class="filters-box">
+              <div class="filters-header">
+                <h3>🔍 Filtros</h3>
+                <button class="close-filters" id="closeFilters">✕</button>
+              </div>
+
+              <!-- Type Filters -->
+              <div class="filter-group">
+                <h4>Tipo</h4>
+                <label class="filter-checkbox">
+                  <input type="checkbox" value="hotel" class="filter-input" data-filter="type">
+                  <span>Hotéis</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" value="restaurant" class="filter-input" data-filter="type">
+                  <span>Restaurantes</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" value="attraction" class="filter-input" data-filter="type">
+                  <span>Pontos Turísticos</span>
+                </label>
+              </div>
+
+              <!-- Price Filter -->
+              <div class="filter-group">
+                <h4>Preço Máximo</h4>
+                <input type="range" id="priceRange" min="0" max="500" value="500" class="price-slider">
+                <div class="price-display">
+                  <span>R$ 0</span>
+                  <span id="priceValue">R$ 500</span>
+                </div>
+              </div>
+
+              <!-- Reset Button -->
+              <button class="btn btn-outline" id="resetFilters">Limpar Filtros</button>
+            </div>
+          </aside>
+
+          <!-- Results -->
+          <div class="results-section">
+            <!-- Filter Toggle Button -->
+            <button class="btn-filters-toggle" id="toggleFilters">🔍 Filtros</button>
+
+            <!-- Results Count -->
+            <div class="results-info">
+              <p id="resultsCount">Mostrando 6 resultados</p>
+            </div>
+
+            <!-- Grid -->
+            <div class="destinations-grid" id="destinationsGrid">
+              <!-- Cards will be inserted here by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Detalhes -->
+  <div class="modal" id="detailsModal">
+    <div class="modal-container">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>BlueTrip</h3>
+          <p>Planeje sua viagem perfeita com inteligência e elegância. Descubra destinos incríveis ao redor do mundo.</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="explorar.html">Explorar</a></li>
+            <li><a href="roteiro.html">Roteiros</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#">Sobre Nós</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contato</h4>
+          <ul>
+            <li>📧 contato@bluetrip.com</li>
+            <li>📱 +55 (11) 9999-9999</li>
+            <li>📍 São Paulo, Brasil</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 BlueTrip. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="#">Privacidade</a>
+          <a href="#">Termos</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/explorar.js"></script>
+</body>
+</html>
