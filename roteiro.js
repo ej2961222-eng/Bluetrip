@@ -1,409 +1,199 @@
 // ============================================
-// BLUETRIP - EXPLORAR.JS
-// Lógica de filtros e listagem de destinos
+// BLUETRIP - ROTEIRO.JS
+// Lógica de geração de roteiros personalizados
 // ============================================
 
-// Dados dos destinos com informações detalhadas
-const destinations = [
-  {
-    id: 1,
-    name: 'Hotel Luxo Beachfront',
-    type: 'hotel',
-    rating: 4.8,
-    price: 450,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-hotel-ArbYs7Q4jDmBhtMcLVMpXH.webp',
-    location: 'Cancun, México',
-    description: 'Resort de luxo com vista para o mar, piscina infinita e spa premium.',
-    fullDescription: 'Um resort de cinco estrelas situado à beira-mar em Cancun, oferecendo uma experiência luxuosa incomparável. Desfrute de vistas panorâmicas do Caribe, piscina infinita aquecida, spa de classe mundial e restaurantes gourmet.',
-    amenities: ['WiFi Grátis', 'Piscina Infinita', 'Spa Premium', 'Restaurante 5 Estrelas', 'Praia Privada', 'Concierge 24h'],
-    reviews: 1250,
-    checkIn: '15:00',
-    checkOut: '11:00'
-  },
-  {
-    id: 2,
-    name: 'Restaurante Gourmet',
-    type: 'restaurant',
-    rating: 4.9,
-    price: 120,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-restaurant-fwzn7hPM334NqLHLpseCQr.webp',
-    location: 'Paris, França',
-    description: 'Culinária francesa autêntica com estrela Michelin.',
-    fullDescription: 'Restaurante premiado com uma estrela Michelin, especializado em culinária francesa clássica com toques modernos. Chef renomado internacionalmente cria pratos memoráveis com ingredientes selecionados.',
-    amenities: ['Estrela Michelin', 'Adega com 500+ Vinhos', 'Menu Degustação', 'Reserva Obrigatória', 'Dress Code Formal', 'Ambiente Romântico'],
-    reviews: 890,
-    openingHours: '19:00 - 23:00',
-    cuisine: 'Francesa'
-  },
-  {
-    id: 3,
-    name: 'Templo Antigo',
-    type: 'attraction',
-    rating: 4.7,
-    price: 25,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-nature-SwUacve5ch9T95uDjLj6LB.webp',
-    location: 'Bali, Indonésia',
-    description: 'Monumento histórico com arquitetura impressionante e paisagem natural.',
-    fullDescription: 'Templo histórico de mais de 500 anos, famoso por sua arquitetura intrincada e localização em meio à natureza selvagem. Um local sagrado que oferece uma experiência espiritual e cultural única.',
-    amenities: ['Guia Turístico', 'Fotografia Permitida', 'Café Local', 'Loja de Souvenirs', 'Banheiros Públicos', 'Estacionamento Gratuito'],
-    reviews: 2100,
-    openingHours: '06:00 - 18:00',
-    entryFee: 'Incluído'
-  },
-  {
-    id: 4,
-    name: 'Hotel Boutique',
-    type: 'hotel',
-    rating: 4.6,
-    price: 280,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-hotel-ArbYs7Q4jDmBhtMcLVMpXH.webp',
-    location: 'Barcelona, Espanha',
-    description: 'Hotel charmoso no coração da cidade com design moderno.',
-    fullDescription: 'Hotel boutique de design moderno localizado no coração de Barcelona, próximo aos principais pontos turísticos. Oferece acomodações elegantes com decoração contemporânea e atendimento personalizado.',
-    amenities: ['WiFi Grátis', 'Café da Manhã Incluído', 'Rooftop Bar', 'Gym 24h', 'Serviço de Quarto', 'Recepção 24h'],
-    reviews: 650,
-    checkIn: '14:00',
-    checkOut: '12:00'
-  },
-  {
-    id: 5,
-    name: 'Restaurante Italiano',
-    type: 'restaurant',
-    rating: 4.5,
-    price: 85,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-restaurant-fwzn7hPM334NqLHLpseCQr.webp',
-    location: 'Roma, Itália',
-    description: 'Autêntica cozinha italiana com ingredientes frescos.',
-    fullDescription: 'Restaurante tradicional italiano com receitas passadas de geração em geração. Todos os ingredientes são frescos e locais, preparados diariamente pelos chefs italianos experientes.',
-    amenities: ['Pasta Fresca Diária', 'Vinho Tinto Italiano', 'Pátio Aconchegante', 'Reserva Recomendada', 'Aceita Grupos', 'Delivery Disponível'],
-    reviews: 1050,
-    openingHours: '12:00 - 23:00',
-    cuisine: 'Italiana'
-  },
-  {
-    id: 6,
-    name: 'Parque Natural',
-    type: 'attraction',
-    rating: 4.8,
-    price: 30,
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663176050636/aqqFSQNrrCR96BCYUuV8oZ/bluetrip-nature-SwUacve5ch9T95uDjLj6LB.webp',
-    location: 'Suíça',
-    description: 'Paisagem alpina de tirar o fôlego com trilhas incríveis.',
-    fullDescription: 'Parque natural protegido com paisagens alpinas de tirar o fôlego. Oferece trilhas para todos os níveis de dificuldade, desde caminhadas leves até escaladas desafiadoras, com vistas espetaculares das montanhas.',
-    amenities: ['Trilhas Marcadas', 'Guia Disponível', 'Refúgio de Montanha', 'Piquenique Permitido', 'Fotografia Profissional', 'Estacionamento'],
-    reviews: 1800,
-    openingHours: '08:00 - 17:00',
-    difficulty: 'Moderada'
-  }
-];
+// Roteiros de exemplo por preferência
+const sampleItineraries = {
+  praia: [
+    { day: 1, activities: ['Chegada e check-in', 'Praia ao entardecer', 'Jantar à beira-mar'] },
+    { day: 2, activities: ['Passeio de barco', 'Snorkel', 'Spa e relaxamento'] },
+    { day: 3, activities: ['Compras no mercado local', 'Praia privada', 'Despedida'] }
+  ],
+  cultura: [
+    { day: 1, activities: ['Visita ao museu principal', 'Centro histórico', 'Ópera local'] },
+    { day: 2, activities: ['Passeio arquitetônico', 'Biblioteca histórica', 'Gastronomia local'] },
+    { day: 3, activities: ['Galeria de arte', 'Mercado de artesanato', 'Concerto'] }
+  ],
+  natureza: [
+    { day: 1, activities: ['Trilha matinal', 'Paisagem montanhosa', 'Piquenique'] },
+    { day: 2, activities: ['Escalada', 'Lago alpino', 'Observação de fauna'] },
+    { day: 3, activities: ['Caminhada final', 'Fotografia', 'Retorno'] }
+  ],
+  gastronomia: [
+    { day: 1, activities: ['Mercado de alimentos', 'Aula de culinária', 'Degustação de vinhos'] },
+    { day: 2, activities: ['Tour gastronômico', 'Restaurante tradicional', 'Café local'] },
+    { day: 3, activities: ['Fábrica de chocolate', 'Almoço especial', 'Compras de souvenirs'] }
+  ],
+  aventura: [
+    { day: 1, activities: ['Rapel', 'Trilha radical', 'Acampamento'] },
+    { day: 2, activities: ['Escalada em rocha', 'Cânion', 'Fogueira'] },
+    { day: 3, activities: ['Salto de paraquedas', 'Tirolesa', 'Retorno'] }
+  ],
+  relaxamento: [
+    { day: 1, activities: ['Spa e massagem', 'Yoga ao amanhecer', 'Meditação'] },
+    { day: 2, activities: ['Banho termal', 'Sauna', 'Tratamento facial'] },
+    { day: 3, activities: ['Reflexologia', 'Chá relaxante', 'Despedida tranquila'] }
+  ]
+};
 
-// Estado dos filtros
-let filters = {
-  type: [],
-  maxPrice: 500
+// Estado do formulário
+let formData = {
+  destination: '',
+  days: 3,
+  budget: 'moderado',
+  preferences: []
 };
 
 // Inicializar
 document.addEventListener('DOMContentLoaded', function() {
-  renderDestinations();
-  setupFilterListeners();
-  setupModal();
+  setupFormListeners();
 });
 
-// Configurar listeners dos filtros
-function setupFilterListeners() {
-  // Filtros de tipo
-  document.querySelectorAll('.filter-input[data-filter="type"]').forEach(input => {
-    input.addEventListener('change', function() {
-      if (this.checked) {
-        filters.type.push(this.value);
+// Configurar listeners do formulário
+function setupFormListeners() {
+  // Input de destino
+  const destinationInput = document.getElementById('destination');
+  if (destinationInput) {
+    destinationInput.addEventListener('input', function() {
+      formData.destination = this.value;
+    });
+  }
+
+  // Slider de dias
+  const daysInput = document.getElementById('days');
+  if (daysInput) {
+    daysInput.addEventListener('input', function() {
+      formData.days = parseInt(this.value);
+      document.getElementById('daysValue').textContent = this.value;
+    });
+  }
+
+  // Select de orçamento
+  const budgetSelect = document.getElementById('budget');
+  if (budgetSelect) {
+    budgetSelect.addEventListener('change', function() {
+      formData.budget = this.value;
+    });
+  }
+
+  // Botões de preferência
+  document.querySelectorAll('.preference-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const preference = this.getAttribute('data-preference');
+      
+      if (this.classList.contains('active')) {
+        this.classList.remove('active');
+        formData.preferences = formData.preferences.filter(p => p !== preference);
       } else {
-        filters.type = filters.type.filter(t => t !== this.value);
+        this.classList.add('active');
+        formData.preferences.push(preference);
       }
-      renderDestinations();
     });
   });
 
-  // Filtro de preço
-  const priceRange = document.getElementById('priceRange');
-  if (priceRange) {
-    priceRange.addEventListener('input', function() {
-      filters.maxPrice = parseInt(this.value);
-      document.getElementById('priceValue').textContent = `R$ ${filters.maxPrice}`;
-      renderDestinations();
-    });
-  }
-
-  // Botão de reset
-  const resetBtn = document.getElementById('resetFilters');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', function() {
-      filters.type = [];
-      filters.maxPrice = 500;
-      
-      document.querySelectorAll('.filter-input[data-filter="type"]').forEach(input => {
-        input.checked = false;
-      });
-      
-      if (priceRange) {
-        priceRange.value = 500;
-        document.getElementById('priceValue').textContent = 'R$ 500';
-      }
-      
-      renderDestinations();
-    });
-  }
-
-  // Toggle filtros (mobile)
-  const toggleBtn = document.getElementById('toggleFilters');
-  const filtersSidebar = document.getElementById('filtersSidebar');
-  
-  if (toggleBtn && filtersSidebar) {
-    toggleBtn.addEventListener('click', function() {
-      filtersSidebar.classList.toggle('active');
-    });
-  }
-
-  // Fechar filtros
-  const closeBtn = document.querySelector('.close-filters');
-  if (closeBtn && filtersSidebar) {
-    closeBtn.addEventListener('click', function() {
-      filtersSidebar.classList.remove('active');
-    });
+  // Botão de gerar roteiro
+  const generateBtn = document.getElementById('generateBtn');
+  if (generateBtn) {
+    generateBtn.addEventListener('click', generateItinerary);
   }
 }
 
-// Configurar modal
-function setupModal() {
-  const modal = document.getElementById('detailsModal');
-  const closeBtn = document.querySelector('.modal-close');
-  
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
-
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-  }
-
-  // Fechar com ESC
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  });
-}
-
-// Abrir modal com detalhes
-function openModal(id) {
-  const dest = destinations.find(d => d.id === id);
-  if (!dest) return;
-
-  const modal = document.getElementById('detailsModal');
-  const modalContent = document.getElementById('modalContent');
-
-  // Gerar HTML do modal
-  let amenitiesHtml = dest.amenities.map(a => `<span class="amenity-tag">${a}</span>`).join('');
-  
-  let extraInfo = '';
-  if (dest.type === 'hotel') {
-    extraInfo = `
-      <div class="modal-info-row">
-        <span class="info-label">Check-in:</span>
-        <span class="info-value">${dest.checkIn}</span>
-      </div>
-      <div class="modal-info-row">
-        <span class="info-label">Check-out:</span>
-        <span class="info-value">${dest.checkOut}</span>
-      </div>
-    `;
-  } else if (dest.type === 'restaurant') {
-    extraInfo = `
-      <div class="modal-info-row">
-        <span class="info-label">Horário:</span>
-        <span class="info-value">${dest.openingHours}</span>
-      </div>
-      <div class="modal-info-row">
-        <span class="info-label">Culinária:</span>
-        <span class="info-value">${dest.cuisine}</span>
-      </div>
-    `;
-  } else if (dest.type === 'attraction') {
-    extraInfo = `
-      <div class="modal-info-row">
-        <span class="info-label">Horário:</span>
-        <span class="info-value">${dest.openingHours}</span>
-      </div>
-      <div class="modal-info-row">
-        <span class="info-label">Dificuldade:</span>
-        <span class="info-value">${dest.difficulty || 'N/A'}</span>
-      </div>
-    `;
-  }
-
-  modalContent.innerHTML = `
-    <div class="modal-header">
-      <img src="${dest.image}" alt="${dest.name}" class="modal-image">
-      <button class="modal-close">✕</button>
-    </div>
-    
-    <div class="modal-body">
-      <div class="modal-title-section">
-        <h2>${dest.name}</h2>
-        <div class="modal-rating">
-          <span class="star">⭐</span>
-          <span class="rating-value">${dest.rating}</span>
-          <span class="reviews-count">(${dest.reviews} avaliações)</span>
-        </div>
-      </div>
-
-      <div class="modal-location">
-        <span>📍</span>
-        <span>${dest.location}</span>
-      </div>
-
-      <div class="modal-price">
-        <span class="price-label">Preço:</span>
-        <span class="price-value">R$ ${dest.price}</span>
-      </div>
-
-      <div class="modal-section">
-        <h3>Descrição</h3>
-        <p>${dest.fullDescription}</p>
-      </div>
-
-      <div class="modal-section">
-        <h3>Informações</h3>
-        ${extraInfo}
-      </div>
-
-      <div class="modal-section">
-        <h3>Comodidades & Serviços</h3>
-        <div class="amenities-list">
-          ${amenitiesHtml}
-        </div>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-primary" onclick="bookNow(${dest.id})">Reservar Agora</button>
-        <button class="btn btn-outline" onclick="addToWishlist(${dest.id})">❤️ Adicionar aos Favoritos</button>
-      </div>
-    </div>
-  `;
-
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-
-  // Reconfigurar botão de fechar
-  const closeBtn = document.querySelector('.modal-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
-}
-
-// Fechar modal
-function closeModal() {
-  const modal = document.getElementById('detailsModal');
-  modal.classList.remove('active');
-  document.body.style.overflow = 'auto';
-}
-
-// Reservar agora
-function bookNow(id) {
-  const dest = destinations.find(d => d.id === id);
-  alert(`✅ Redirecionando para reserva de "${dest.name}"...`);
-  closeModal();
-}
-
-// Adicionar aos favoritos
-function addToWishlist(id) {
-  const dest = destinations.find(d => d.id === id);
-  let wishlist = JSON.parse(localStorage.getItem('bluetrip_wishlist') || '[]');
-  
-  if (!wishlist.find(w => w.id === id)) {
-    wishlist.push({ id: dest.id, name: dest.name, type: dest.type });
-    localStorage.setItem('bluetrip_wishlist', JSON.stringify(wishlist));
-    alert(`❤️ "${dest.name}" adicionado aos favoritos!`);
-  } else {
-    alert(`"${dest.name}" já está nos seus favoritos!`);
-  }
-}
-
-// Filtrar destinos
-function getFilteredDestinations() {
-  return destinations.filter(dest => {
-    const typeMatch = filters.type.length === 0 || filters.type.includes(dest.type);
-    const priceMatch = dest.price <= filters.maxPrice;
-    return typeMatch && priceMatch;
-  });
-}
-
-// Renderizar destinos
-function renderDestinations() {
-  const filtered = getFilteredDestinations();
-  const grid = document.getElementById('destinationsGrid');
-  const resultsCount = document.getElementById('resultsCount');
-
-  if (!grid) return;
-
-  // Atualizar contagem
-  if (resultsCount) {
-    const count = filtered.length;
-    resultsCount.textContent = `Mostrando ${count} resultado${count !== 1 ? 's' : ''}`;
-  }
-
-  // Limpar grid
-  grid.innerHTML = '';
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-        <p style="color: #7a7a7a; font-size: 1.1rem;">Nenhum destino encontrado com os filtros selecionados.</p>
-      </div>
-    `;
+// Gerar roteiro
+function generateItinerary() {
+  // Validar destino
+  if (!formData.destination.trim()) {
+    alert('Por favor, digite um destino');
     return;
   }
 
-  // Renderizar cards
-  filtered.forEach(dest => {
-    const card = createDestinationCard(dest);
-    grid.appendChild(card);
-  });
+  // Selecionar preferência (primeira ou padrão)
+  const preference = formData.preferences.length > 0 ? formData.preferences[0] : 'praia';
+  const baseItinerary = sampleItineraries[preference] || sampleItineraries.praia;
+
+  // Ajustar para o número de dias
+  const adjustedItinerary = baseItinerary.slice(0, formData.days).map((item, idx) => ({
+    day: idx + 1,
+    activities: item.activities
+  }));
+
+  // Renderizar resultado
+  renderItinerary(adjustedItinerary);
 }
 
-// Criar card de destino
-function createDestinationCard(dest) {
-  const card = document.createElement('div');
-  card.className = 'destination-card';
+// Renderizar roteiro
+function renderItinerary(itinerary) {
+  const resultsContainer = document.getElementById('roteiro-results');
+  
+  if (!resultsContainer) return;
 
-  card.innerHTML = `
-    <div class="destination-image">
-      <img src="${dest.image}" alt="${dest.name}" loading="lazy">
-      <div class="destination-rating">
-        <span class="star">⭐</span>
-        <span>${dest.rating}</span>
-      </div>
-    </div>
-    <div class="destination-content">
-      <h4>${dest.name}</h4>
-      <div class="destination-location">
-        <span>📍</span>
-        <span>${dest.location}</span>
-      </div>
-      <p class="destination-description">${dest.description}</p>
-      <div class="destination-footer">
-        <div class="destination-price">
-          <span>💰</span>
-          <span>R$ ${dest.price}</span>
-        </div>
-        <button class="btn btn-primary" onclick="openModal(${dest.id})">Ver Detalhes</button>
-      </div>
+  const preferencesText = formData.preferences.length > 0 
+    ? formData.preferences.join(', ') 
+    : 'Geral';
+
+  let html = `
+    <div class="itinerary-header">
+      <h2>Seu Roteiro em ${formData.destination}</h2>
+      <p class="itinerary-meta">${formData.days} dias • Orçamento: ${formData.budget} • Preferências: ${preferencesText}</p>
     </div>
   `;
 
-  return card;
+  // Adicionar dias
+  itinerary.forEach(day => {
+    html += `
+      <div class="itinerary-day">
+        <h3>Dia ${day.day}</h3>
+        <ul class="itinerary-activities">
+          ${day.activities.map(activity => `<li>${activity}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  });
+
+  // Adicionar botões de ação
+  html += `
+    <div class="itinerary-actions">
+      <button class="btn btn-primary" onclick="saveItinerary()">Salvar Roteiro</button>
+      <button class="btn btn-outline" onclick="favoriteItinerary()">❤️ Favoritar</button>
+    </div>
+  `;
+
+  resultsContainer.innerHTML = html;
+}
+
+// Salvar roteiro
+function saveItinerary() {
+  const itinerary = {
+    destination: formData.destination,
+    days: formData.days,
+    budget: formData.budget,
+    preferences: formData.preferences,
+    savedAt: new Date().toLocaleString('pt-BR')
+  };
+
+  // Salvar no localStorage
+  let saved = JSON.parse(localStorage.getItem('bluetrip_itineraries') || '[]');
+  saved.push(itinerary);
+  localStorage.setItem('bluetrip_itineraries', JSON.stringify(saved));
+
+  alert(`✅ Roteiro "${formData.destination}" salvo com sucesso!`);
+}
+
+// Favoritar roteiro
+function favoriteItinerary() {
+  const favorite = {
+    destination: formData.destination,
+    days: formData.days,
+    budget: formData.budget,
+    preferences: formData.preferences,
+    favoritedAt: new Date().toLocaleString('pt-BR')
+  };
+
+  // Salvar no localStorage
+  let favorites = JSON.parse(localStorage.getItem('bluetrip_favorites') || '[]');
+  favorites.push(favorite);
+  localStorage.setItem('bluetrip_favorites', JSON.stringify(favorites));
+
+  alert(`❤️ Roteiro "${formData.destination}" adicionado aos favoritos!`);
 }
